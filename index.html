@@ -83,7 +83,7 @@
     <div class="chips" id="chips"></div>
     <section>
       <div class="card info" id="info"></div>
-      <div class="ad">[광고] 이 페이지의 구매처 링크는 제휴 링크예요. 링크로 구매하면 운영자가 판매처로부터 수수료를 받을 수 있어요. 구매 가격은 똑같아요.</div>
+      <div class="ad">[광고] 이 페이지는 제휴마케팅이 포함된 광고로 커미션을 지급 받습니다. 구매처 링크로 구매하면 운영자가 수수료를 받을 수 있고, 구매 가격은 똑같아요.</div>
       <div class="sortbar"><b id="listTitle">인기 제품</b>
         <select id="sort"><option value="daily">하루 가격 낮은 순</option><option value="reviews">후기 많은 순</option></select>
       </div>
@@ -121,7 +121,7 @@
 
 <script>
 // 제휴 링크 템플릿: 승인 후 {url} 자리에 원래 상품 주소가 들어가도록 바꾸면 돼요.
-const AFF = { iherb: url => url };
+const AFF = { iherb: url => 'https://click.linkprice.com/click.php?m=iherb&a=A100709435&l=9999&l_cd1=3&l_cd2=0&tu=' + encodeURIComponent(url) };
 const PRICE_DATE = '2026년 11월 1일';
 
 const CATS = [
@@ -158,7 +158,7 @@ P.forEach(p=>{p.days=Math.floor(p.count/p.dose); p.daily=Math.round(p.price/p.da
 
 const $=s=>document.querySelector(s);
 const won=n=>n.toLocaleString('ko-KR')+'원';
-let cat='vitd';
+let cat=(()=>{const q=new URLSearchParams(location.search).get('c'); return CATS.some(c=>c.id===q)?q:'vitd';})();
 
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1600);}
 
