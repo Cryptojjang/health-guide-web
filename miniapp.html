@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>[시안] 건강 길잡이 · 영양제 탭 (토스 미니앱용)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{--blue:#3182F6;--blue-weak:#E8F3FF;--g900:#191F28;--g700:#4E5968;--g500:#8B95A1;--g300:#D1D6DB;--g100:#F2F4F6;--g50:#F9FAFB;--red:#F04452;--red-weak:#FFEEEE;--green:#03B26C;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Pretendard,-apple-system,sans-serif;background:var(--g100);color:var(--g900)}
+  .app{max-width:420px;margin:0 auto;background:#fff;min-height:100vh;padding-bottom:96px}
+  .nav{height:48px;display:flex;align-items:center;padding:0 16px;font-weight:600;font-size:15px;border-bottom:1px solid var(--g100)}
+  .nav .back{font-size:20px;margin-right:12px;color:var(--g700)}
+  .hero{padding:20px 20px 4px}
+  .hero h1{font-size:22px;line-height:1.35}
+  .hero p{color:var(--g700);font-size:14px;margin-top:6px}
+  .seg{display:flex;background:var(--g100);border-radius:12px;padding:4px;margin:16px 20px 4px}
+  .seg button{flex:1;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--g500);padding:9px 0;border-radius:9px;cursor:pointer}
+  .seg button.on{background:#fff;color:var(--g900);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+  section{padding:8px 20px}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:8px 20px;scrollbar-width:none}
+  .chip{flex:none;border:0;background:var(--g100);color:var(--g700);font:inherit;font-size:14px;font-weight:600;padding:8px 14px;border-radius:18px;cursor:pointer}
+  .chip.on{background:var(--g900);color:#fff}
+  .card{background:var(--g50);border-radius:16px;padding:16px;margin:8px 0}
+  .card h2{font-size:17px;margin-bottom:8px}
+  .card ul{padding-left:18px;color:var(--g700);font-size:14px;line-height:1.65}
+  .pill{display:inline-block;font-size:12px;background:#fff;border-radius:8px;padding:6px 8px;color:var(--g700);margin:8px 6px 0 0}
+  .note{font-size:12px;color:var(--g500);line-height:1.5;margin-top:8px}
+  .field{margin:10px 0}
+  .field label{display:block;font-size:13px;color:var(--g500);margin-bottom:4px}
+  .field input,.field select{width:100%;font:inherit;font-size:16px;border:0;border-bottom:2px solid var(--g300);padding:8px 0;background:transparent;outline:none}
+  .field input:focus{border-color:var(--blue)}
+  .row{display:flex;gap:12px}.row>*{flex:1}
+  .item{border-bottom:1px solid var(--g100);padding:14px 0}
+  .item b{font-size:15px}
+  .item .daily{font-size:18px;font-weight:700;color:var(--blue);margin-top:4px}
+  .item .meta{font-size:12px;color:var(--g500);margin-top:2px}
+  .warn{display:inline-block;font-size:11px;font-weight:600;background:var(--red-weak);color:var(--red);border-radius:6px;padding:2px 6px;margin-top:6px}
+  .del{float:right;border:0;background:none;color:var(--g500);font:inherit;font-size:13px;cursor:pointer}
+  .rt{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--g100);font-size:15px;font-weight:600}
+  .rt input{width:22px;height:22px;accent-color:var(--blue)}
+  .dots{display:flex;gap:6px;margin-top:10px}
+  .dots span{flex:1;text-align:center;font-size:11px;color:var(--g500)}
+  .dots i{display:block;height:28px;border-radius:8px;background:var(--g100);margin-bottom:4px}
+  .dots i.full{background:var(--green)}.dots i.half{background:#9EE6C4}
+  .empty{color:var(--g500);font-size:14px;text-align:center;padding:28px 0;line-height:1.6}
+  .cta{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:420px;padding:12px 20px 20px;background:linear-gradient(transparent,#fff 30%)}
+  .cta button{width:100%;border:0;border-radius:14px;background:var(--blue);color:#fff;font:inherit;font-size:16px;font-weight:600;padding:15px 0;cursor:pointer}
+  .ad{margin:16px 20px;height:56px;border-radius:12px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--g500)}
+  .hidden{display:none}
+  .badge-mock{position:fixed;top:8px;right:8px;background:#FFB800;color:#000;font-size:11px;font-weight:700;padding:4px 8px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="badge-mock">시안</div>
+<div class="app">
+  <div class="nav"><span class="back">‹</span>건강 길잡이</div>
+  <div class="hero">
+    <h1>내 영양제,<br>하루에 얼마일까요?</h1>
+    <p>성분 정보를 보고, 먹는 영양제의 하루 가격과 복용을 챙겨요.</p>
+  </div>
+  <div class="seg">
+    <button class="on" data-v="info">성분 정보</button>
+    <button data-v="mine">내 영양제</button>
+    <button data-v="routine">오늘 복용</button>
+  </div>
+
+  <!-- 성분 정보 -->
+  <div id="v-info">
+    <div class="chips" id="chips"></div>
+    <section><div class="card" id="info"></div>
+      <div class="card"><h2>라벨 읽는 법</h2><ul>
+        <li>"1회 제공량"이 2정이면 하루 2정 기준 함량이에요.</li>
+        <li>비타민D는 ㎍과 IU를 같이 써요. 1㎍ = 40IU예요.</li>
+        <li>오메가3는 "피쉬오일 양"보다 EPA+DHA 합을 보세요.</li>
+      </ul></div>
+      <p class="note">식약처 고시 영양성분 기능성 내용과 한국인 영양소 섭취기준(상한섭취량)을 정리했어요. 특정 제품의 효과를 뜻하지 않으며, 질병의 진단·치료 정보가 아니에요. 복용 중인 약이 있거나 임신·수유 중이면 전문가와 상의하세요.</p>
+    </section>
+  </div>
+
+  <!-- 내 영양제 -->
+  <div id="v-mine" class="hidden">
+    <section>
+      <div class="card">
+        <h2>영양제 추가</h2>
+        <div class="field"><label>성분</label><select id="fCat"></select></div>
+        <div class="field"><label>이름 (선택)</label><input id="fName" placeholder="예: 아침 비타민D"></div>
+        <div class="row">
+          <div class="field"><label>가격(원)</label><input id="fPrice" inputmode="numeric" placeholder="12000"></div>
+          <div class="field"><label>총 개수</label><input id="fCount" inputmode="numeric" placeholder="120"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label>하루 몇 정</label><input id="fDose" inputmode="numeric" placeholder="1"></div>
+          <div class="field"><label>1정 함량 (선택)</label><input id="fAmt" inputmode="decimal" placeholder="예: 25"></div>
+        </div>
+        <p class="note" id="fUnit"></p>
+      </div>
+      <div id="mineList"></div>
+    </section>
+  </div>
+
+  <!-- 오늘 복용 -->
+  <div id="v-routine" class="hidden">
+    <section>
+      <div class="card"><b id="rtHead"></b><div class="dots" id="dots"></div></div>
+      <div id="rtList"></div>
+    </section>
+  </div>
+
+  <div class="ad">앱인토스 배너 광고 자리</div>
+  <div class="cta"><button id="cta">영양제 추가하기</button></div>
+</div>
+<script>
+const CATS=[
+ {id:'vitd',name:'비타민D',unit:'㎍',ul:100,info:['칼슘과 인이 흡수되고 이용되는 데 필요','뼈의 형성과 유지에 필요'],pills:['1일 상한섭취량 100㎍(4,000IU)']},
+ {id:'mag',name:'마그네슘',unit:'mg',ul:350,info:['에너지 이용에 필요','신경과 근육 기능 유지에 필요'],pills:['보충제 기준 1일 상한 350mg']},
+ {id:'omega',name:'오메가3',unit:'mg',info:['혈중 중성지질 개선·혈행 개선에 도움을 줄 수 있음 (EPA 및 DHA 함유 유지)'],pills:['EPA+DHA 합으로 비교']},
+ {id:'probio',name:'유산균',unit:'억 CFU',info:['유산균 증식 및 유해균 억제에 도움을 줄 수 있음','배변활동 원활에 도움을 줄 수 있음'],pills:['균 수가 많다고 더 좋은 건 아니에요']},
+ {id:'vitc',name:'비타민C',unit:'mg',ul:2000,info:['결합조직 형성과 기능 유지에 필요','철의 흡수에 필요','유해산소로부터 세포를 보호하는 데 필요'],pills:['1일 상한섭취량 2,000mg']},
+ {id:'multi',name:'종합비타민',unit:'',info:['여러 비타민·무기질을 한 번에 챙기는 제품이에요','제품마다 구성이 달라 라벨 확인이 중요해요'],pills:['다른 영양제와 겹치는 성분 확인']},
+];
+const $=s=>document.querySelector(s), won=n=>Math.round(n).toLocaleString('ko-KR')+'원';
+let cat='vitd', view='info';
+const K='hgs_items', C='hgs_checks', today=()=>new Date().toISOString().slice(0,10);
+const items=()=>JSON.parse(localStorage.getItem(K)||'[]'), save=v=>localStorage.setItem(K,JSON.stringify(v));
+const checks=()=>JSON.parse(localStorage.getItem(C)||'{}'), saveC=v=>localStorage.setItem(C,JSON.stringify(v));
+
+function info(){
+ $('#chips').innerHTML=CATS.map(c=>`<button class="chip ${c.id===cat?'on':''}" data-c="${c.id}">${c.name}</button>`).join('');
+ const c=CATS.find(x=>x.id===cat);
+ $('#info').innerHTML=`<h2>${c.name}</h2><ul>${c.info.map(i=>`<li>${i}</li>`).join('')}</ul>${c.pills.map(p=>`<span class="pill">${p}</span>`).join('')}`;
+}
+function mine(){
+ $('#fCat').innerHTML=CATS.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+ unit();
+ const list=items();
+ if(!list.length){$('#mineList').innerHTML='<p class="empty">먹고 있는 영양제를 넣으면<br>하루 가격을 나란히 비교해 드려요.</p>';return;}
+ $('#mineList').innerHTML=list.map((it,i)=>{const c=CATS.find(x=>x.id===it.cat); const days=Math.floor(it.count/it.dose); const daily=it.price/days; const amt=it.amt?it.amt*it.dose:null; const over=c.ul&&amt&&amt>c.ul;
+  return `<div class="item"><button class="del" data-del="${i}">삭제</button><b>${it.name||c.name}</b><div class="daily">하루 ${won(daily)}</div><div class="meta">${c.name} · ${won(it.price)} · ${days}일분 · 하루 ${it.dose}정${amt?` · 하루 ${amt}${c.unit}`:''}</div>${over?`<span class="warn">하루 ${amt}${c.unit}로 상한섭취량(${c.ul}${c.unit})보다 많아요</span>`:''}</div>`;}).join('')
+  + `<p class="note">입력한 내용은 이 기기에만 저장돼요.</p>`;
+}
+function unit(){const c=CATS.find(x=>x.id===$('#fCat').value)||CATS[0]; $('#fUnit').textContent=c.unit?`함량 단위: ${c.unit}`:'종합비타민은 함량 없이 가격만 넣어도 돼요.';}
+function routine(){
+ const list=items(), ch=checks()[today()]||[];
+ const d=new Date(); $('#rtHead').textContent=`${d.getMonth()+1}월 ${d.getDate()}일 · ${list.length?`${list.filter((_,i)=>ch.includes(i)).length}/${list.length} 먹었어요`:'영양제를 먼저 추가해 주세요'}`;
+ const all=checks(); let html='';
+ for(let k=6;k>=0;k--){const dd=new Date(Date.now()-k*864e5); const key=dd.toISOString().slice(0,10); const n=(all[key]||[]).length; const cls=list.length&&n>=list.length?'full':n>0?'half':''; html+=`<span><i class="${cls}"></i>${'일월화수목금토'[dd.getDay()]}</span>`;}
+ $('#dots').innerHTML=html;
+ $('#rtList').innerHTML=list.length?list.map((it,i)=>`<label class="rt"><input type="checkbox" data-chk="${i}" ${ch.includes(i)?'checked':''}>${it.name||CATS.find(x=>x.id===it.cat).name} <span class="meta" style="font-weight:400;color:#8B95A1">하루 ${it.dose}정</span></label>`).join(''):'<p class="empty">"내 영양제"에서 먹는 영양제를 추가해 주세요.</p>';
+}
+function show(v){view=v;document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));['info','mine','routine'].forEach(x=>$('#v-'+x).classList.toggle('hidden',x!==v));$('#cta').textContent=v==='mine'?'추가하기':'영양제 추가하기';if(v==='info')info();if(v==='mine')mine();if(v==='routine')routine();}
+document.addEventListener('click',e=>{const t=e.target;
+ if(t.dataset.v)show(t.dataset.v);
+ if(t.dataset.c){cat=t.dataset.c;info();}
+ if(t.dataset.del!==undefined){const l=items();l.splice(+t.dataset.del,1);save(l);mine();}
+ if(t.id==='cta'){ if(view!=='mine'){show('mine');return;}
+   const n=s=>+($(s).value.replace(/[^0-9.]/g,''))||0; const it={cat:$('#fCat').value,name:$('#fName').value.trim().slice(0,20),price:n('#fPrice'),count:n('#fCount'),dose:n('#fDose')||1,amt:n('#fAmt')||null};
+   if(!it.price||!it.count){alert('가격과 총 개수를 넣어 주세요');return;}
+   const l=items();l.push(it);save(l);['#fName','#fPrice','#fCount','#fDose','#fAmt'].forEach(s=>$(s).value='');mine();}
+});
+document.addEventListener('change',e=>{const t=e.target; if(t.id==='fCat')unit();
+ if(t.dataset.chk!==undefined){const all=checks(),k=today(),s=new Set(all[k]||[]);t.checked?s.add(+t.dataset.chk):s.delete(+t.dataset.chk);all[k]=[...s];saveC(all);routine();}});
+show('info');
+</script>
+</body>
+</html>
