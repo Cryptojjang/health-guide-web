@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>건강 길잡이 | 영양제 1일 단가 비교</title>
-<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
+<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민, 아연, 루테인, 코엔자임Q10, 밀크씨슬, 콜라겐, 비오틴 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
 <meta property="og:title" content="건강 길잡이 | 영양제 1일 단가 비교">
 <meta property="og:description" content="인기 영양제를 하루치 가격으로 비교하고 복용 루틴을 체크해요.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -131,6 +131,12 @@ const CATS = [
   {id:'probio', name:'유산균', info:['유산균 증식 및 유해균 억제에 도움을 줄 수 있음','배변활동 원활에 도움을 줄 수 있음'], kv:['CFU(균 수)가 높다고 무조건 좋은 건 아니에요']},
   {id:'vitc', name:'비타민C', info:['결합조직 형성과 기능 유지에 필요','철의 흡수에 필요','유해산소로부터 세포를 보호하는 데 필요'], kv:['1일 상한섭취량 2,000mg']},
   {id:'multi', name:'종합비타민', info:['여러 비타민·무기질을 한 번에 챙길 수 있어요','제품마다 성분 구성이 달라서 라벨 확인이 중요해요'], kv:['하루 섭취 정수를 꼭 확인하세요']},
+  {id:'zinc', name:'아연', info:['정상적인 면역기능에 필요','정상적인 세포분열에 필요'], kv:['1일 상한섭취량 35mg'], ul:35, unit:'mg'},
+  {id:'lutein', name:'루테인', info:['노화로 인해 감소될 수 있는 황반색소밀도를 유지하여 눈 건강에 도움을 줄 수 있음 (마리골드꽃추출물)'], kv:['고시 기준 1일 루테인 10~20mg']},
+  {id:'coq10', name:'코엔자임Q10', info:['항산화에 도움을 줄 수 있음','높은 혈압 감소에 도움을 줄 수 있음'], kv:['고시 기준 1일 90~100mg']},
+  {id:'milkthistle', name:'밀크씨슬', info:['간 건강에 도움을 줄 수 있음 (밀크씨슬 추출물, 실리마린 기준)'], kv:['고시 기준 실리마린 1일 130mg']},
+  {id:'collagen', name:'콜라겐', info:['피부·뼈·연골 등 결합조직을 이루는 단백질이에요','콜라겐 제품의 기능성은 원료마다 따로 인정받기 때문에 제품 라벨을 확인하세요'], kv:['하루 섭취량(g·정)을 제품마다 확인하세요'], src:'콜라겐은 고시형 기능성 원료가 아니라 일반 성분 정보로 정리했어요. 특정 제품의 효과를 뜻하지 않아요.'},
+  {id:'biotin', name:'비오틴', info:['지방, 탄수화물, 단백질 대사와 에너지 생성에 필요'], kv:['고함량은 혈액검사 결과에 영향을 줄 수 있어요']},
 ];
 
 const IMG = 'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/';
@@ -153,6 +159,24 @@ const P = [
   {c:'multi', brand:'Life Extension', name:'투 퍼 데이 종합비타민 60정', price:14143, count:60, dose:2, rating:4.8, reviews:62711, url:'https://kr.iherb.com/pr/life-extension-two-per-day-multivitamin-60-tablets/86455', img:'lex/lex23166/v/99.jpg'},
   {c:'multi', brand:'Life Extension', name:'투 퍼 데이 종합비타민 120정', price:26128, count:120, dose:2, rating:4.9, reviews:8828, url:'https://kr.iherb.com/pr/life-extension-two-per-day-multivitamin-120-tablets/137715', img:'lex/lex01011/v/78.jpg'},
   {c:'multi', brand:'Thorne', name:'기본 영양소 2/데이 60캡슐', price:42819, count:60, dose:2, rating:4.7, reviews:12487, url:'https://kr.iherb.com/pr/thorne-basic-nutrients-2-day-60-capsules/85476', img:'thr/thr00684/v/63.jpg'},
+  {c:'zinc', brand:"Thorne", name:'아연 피콜리네이트 15mg 60캡슐', price:15369, count:60, dose:1, rating:4.9, reviews:27387, amt:15, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/thorne-zinc-picolinate-15-mg-60-capsules/18476', img:'thr/thr21002/g/37.jpg'},
+  {c:'zinc', brand:"Solgar", name:'아연 피콜리네이트 22mg 100정', price:11448, count:100, dose:1, rating:4.9, reviews:36814, amt:22, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/solgar-zinc-picolinate-22-mg-100-tablets/10035', img:'sol/sol03725/g/91.jpg'},
+  {c:'zinc', brand:"NOW Foods", name:'아연 50mg 250정', price:13759, count:250, dose:1, rating:4.7, reviews:83815, amt:50, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/now-foods-zinc-50-mg-250-tablets/883', img:'now/now01522/g/72.jpg'},
+  {c:'lutein', brand:"Doctor's Best", name:'루테인 Lutemax 2020 20mg 180소프트젤', price:38184, count:180, dose:1, rating:4.7, reviews:36466, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/doctor-s-best-lutein-180-softgels/58903', img:'drb/drb00370/g/107.jpg'},
+  {c:'lutein', brand:"California Gold Nutrition", name:'루테인 20mg 120소프트젤', price:22583, count:120, dose:1, rating:4.7, reviews:50144, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-lutein-with-zeaxanthin-from-marigold-extract-120-veggie-softgels/94824', img:'cgn/cgn01403/g/126.jpg'},
+  {c:'lutein', brand:"California Gold Nutrition", name:'루테인 10mg 120소프트젤', price:16946, count:120, dose:1, rating:4.8, reviews:14370, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-lutein-with-zeaxanthin-from-marigold-extract-120-veggie-softgels/76863', img:'cgn/cgn01168/g/148.jpg'},
+  {c:'coq10', brand:"California Gold Nutrition", name:'CoQ10 100mg 150캡슐', price:27281, count:150, dose:1, rating:4.8, reviews:23418, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-coq10-ubiquinone-usp-with-bioperine-black-pepper-extract-enhanced-bioavailability-150-veggie-capsules/91610', img:'cgn/cgn01428/g/260.jpg'},
+  {c:'coq10', brand:"Doctor's Best", name:'고흡수 CoQ10 100mg 120소프트젤', price:24254, count:120, dose:1, rating:4.8, reviews:58861, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/doctor-s-best-high-absorption-coq10-100-mg-120-softgels/10930', img:'drb/drb00183/g/131.jpg'},
+  {c:'coq10', brand:"Qunol", name:'울트라 CoQ10 100mg 60소프트젤', price:30620, count:60, dose:1, rating:4.8, reviews:2126, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/qunol-ultra-coq10-60-softgels/63910', img:'qnl/qnl00124/g/94.jpg'},
+  {c:'milkthistle', brand:"California Gold Nutrition", name:'실리마린 복합체 120캡슐', price:19538, count:120, dose:1, rating:4.8, reviews:80244, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-silymarin-complex-120-veggie-capsules/62027', img:'cgn/cgn00956/g/369.jpg'},
+  {c:'milkthistle', brand:"NOW Foods", name:'밀크씨슬 추출물 200캡슐', price:32785, count:200, dose:1, rating:4.8, reviews:65492, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/now-foods-milk-thistle-extract-with-artichoke-dandelion-200-veg-capsules/13870', img:'now/now04753/g/130.jpg'},
+  {c:'milkthistle', brand:"Life Extension", name:'어드밴스드 밀크씨슬 120소프트젤', price:48899, count:120, dose:2, rating:4.7, reviews:5958, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/life-extension-advanced-milk-thistle-120-softgels/67064', img:'lex/lex19251/g/89.jpg'},
+  {c:'collagen', brand:"California Gold Nutrition", name:'콜라겐업 해양 콜라겐 분말 206g', price:23568, count:41, dose:1, rating:4.7, reviews:331511, u:'스푼', pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-collagenup-hydrolyzed-marine-collagen-peptides-with-hyaluronic-acid-unflavored-7-26-oz-206-g/64903', img:'cgn/cgn01033/g/478.jpg'},
+  {c:'collagen', brand:"Youtheory", name:'콜라겐 290정', price:24569, count:290, dose:6, rating:4.7, reviews:47831, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/youtheory-collagen-290-tablets/59088', img:'you/you00303/g/74.jpg'},
+  {c:'collagen', brand:"Doctor's Best", name:'콜라겐 1형·3형 180정', price:19382, count:180, dose:6, rating:4.7, reviews:24763, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/doctor-s-best-collagen-types-1-3-with-vitamin-c-180-tablets/19114', img:'drb/drb00204/g/141.jpg'},
+  {c:'biotin', brand:"NOW Foods", name:'비오틴 5,000mcg 120캡슐', price:11789, count:120, dose:1, rating:4.8, reviews:73857, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/now-foods-biotin-5-000-mcg-120-veg-capsules/3319', img:'now/now00474/g/68.jpg'},
+  {c:'biotin', brand:"California Gold Nutrition", name:'비오틴 10,000mcg 90소프트젤', price:12118, count:90, dose:1, rating:4.7, reviews:17367, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-biotin-10-000-mcg-90-veggie-softgels/76865', img:'cgn/cgn01170/g/184.jpg'},
+  {c:'biotin', brand:"21st Century", name:'비오틴 10,000mcg 120정', price:10826, count:120, dose:1, rating:4.7, reviews:48136, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/21st-century-biotin-10-000-mcg-120-tablets/64496', img:'cen/cen27757/g/61.jpg'},
 ];
 P.forEach(p=>{p.days=Math.floor(p.count/p.dose); p.daily=Math.round(p.price/p.days); p.id=p.url.split('/').pop();});
 
@@ -169,7 +193,7 @@ function renderInfo(){
   const c=CATS.find(x=>x.id===cat);
   $('#info').innerHTML=`<h2>${c.name}, 이런 성분이에요</h2><ul>${c.info.map(i=>`<li>${i}</li>`).join('')}</ul>
   <div class="kv">${c.kv.map(k=>`<span>${k}</span>`).join('')}</div>
-  <p class="src">식약처 고시 영양성분 기능성 내용 기준이에요. 특정 제품의 효과를 뜻하지 않아요.</p>`;
+  <p class="src">${c.src||'식약처 고시 기능성 내용 기준이에요. 특정 제품의 효과를 뜻하지 않아요.'}</p>`;
   $('#listTitle').textContent=`${c.name} 인기 제품`;
 }
 function renderList(){
@@ -183,16 +207,16 @@ function renderList(){
         <div class="brand">${p.brand}</div>
         <div class="pname">${p.name}</div>
         <div class="daily">하루 ${won(p.daily)}<small>${won(p.price)} · ${p.days}일분</small></div>
-        <div class="meta">하루 ${p.dose}정 · ★ ${p.rating} (후기 ${p.reviews.toLocaleString('ko-KR')}개)</div>
+        <div class="meta">하루 ${p.dose}${p.u||'정'} · ★ ${p.rating} (후기 ${p.reviews.toLocaleString('ko-KR')}개)</div>
         ${p.daily===min?'<span class="badge b-best">하루 가격 최저</span>':''}
-        ${c.ul&&p.amt&&p.amt>c.ul?`<span class="badge b-warn">1일 상한섭취량(${c.ul}㎍)보다 함량이 높아요</span>`:''}
+        ${c.ul&&p.amt&&p.amt>c.ul?`<span class="badge b-warn">1일 상한섭취량(${c.ul}${c.unit||'㎍'})보다 함량이 높아요</span>`:''}
         <div class="btns">
           <a class="btn btn-p" href="${AFF.iherb(p.url)}" target="_blank" rel="sponsored nofollow noopener">아이허브에서 보기</a>
           <button class="btn btn-s" data-add="${p.id}">루틴에 담기</button>
         </div>
       </div>
     </div>`).join('');
-  $('#priceNote').textContent=`가격은 ${PRICE_DATE} 아이허브 한국 사이트 표시가 기준이에요. 할인·환율에 따라 바뀔 수 있으니 구매 전 판매처에서 확인하세요.`;
+  $('#priceNote').textContent=`가격은 ${(arr[0]&&arr[0].pd)||PRICE_DATE} 아이허브 한국 사이트 표시가 기준이에요. 할인·환율에 따라 바뀔 수 있으니 구매 전 판매처에서 확인하세요.`;
 }
 function renderAll(){renderChips();renderInfo();renderList();}
 
@@ -222,7 +246,7 @@ function renderRoutine(){
   const cost=r.reduce((s,id)=>s+(P.find(p=>p.id===id)?.daily||0),0);
   $('#rtSum').textContent=`${r.length}개 중 ${done}개 먹었어요 · 하루 약 ${won(cost)}`;
   $('#rtList').innerHTML=r.map(id=>{const p=P.find(x=>x.id===id); if(!p) return ''; const c=CATS.find(x=>x.id===p.c);
-    return `<label class="rt"><input type="checkbox" data-chk="${id}" ${ch.includes(id)?'checked':''}><span class="n">${c.name} <span class="d">${p.brand} · 하루 ${p.dose}정</span></span><button data-del="${id}">빼기</button></label>`;}).join('');
+    return `<label class="rt"><input type="checkbox" data-chk="${id}" ${ch.includes(id)?'checked':''}><span class="n">${c.name} <span class="d">${p.brand} · 하루 ${p.dose}${p.u||'정'}</span></span><button data-del="${id}">빼기</button></label>`;}).join('');
 }
 
 document.addEventListener('click',e=>{
