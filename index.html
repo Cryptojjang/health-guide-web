@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>건강 길잡이 | 영양제 1일 단가 비교</title>
-<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민, 아연, 루테인, 코엔자임Q10, 밀크씨슬, 콜라겐, 비오틴 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
+<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민, 아연, 루테인, 코엔자임Q10, 밀크씨슬, 콜라겐, 비오틴, 철분, 칼슘, 엽산, 비타민B군, 셀레늄, 글루코사민 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
 <meta property="og:title" content="건강 길잡이 | 영양제 1일 단가 비교">
 <meta property="og:description" content="인기 영양제를 하루치 가격으로 비교하고 복용 루틴을 체크해요.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -137,6 +137,12 @@ const CATS = [
   {id:'milkthistle', name:'밀크씨슬', info:['간 건강에 도움을 줄 수 있음 (밀크씨슬 추출물, 실리마린 기준)'], kv:['고시 기준 실리마린 1일 130mg']},
   {id:'collagen', name:'콜라겐', info:['피부·뼈·연골 등 결합조직을 이루는 단백질이에요','콜라겐 제품의 기능성은 원료마다 따로 인정받기 때문에 제품 라벨을 확인하세요'], kv:['하루 섭취량(g·정)을 제품마다 확인하세요'], src:'콜라겐은 고시형 기능성 원료가 아니라 일반 성분 정보로 정리했어요. 특정 제품의 효과를 뜻하지 않아요.'},
   {id:'biotin', name:'비오틴', info:['지방, 탄수화물, 단백질 대사와 에너지 생성에 필요'], kv:['고함량은 혈액검사 결과에 영향을 줄 수 있어요']},
+  {id:'iron', name:'철분', info:['체내 산소운반과 혈액생성에 필요','에너지 생성에 필요'], kv:['1일 상한섭취량 45mg','커피·녹차·칼슘과는 시간을 띄워요'], ul:45, unit:'mg'},
+  {id:'calcium', name:'칼슘', info:['뼈와 치아 형성에 필요','신경과 근육 기능 유지에 필요','정상적인 혈액응고에 필요','골다공증 발생 위험 감소에 도움을 줌'], kv:['1일 상한섭취량 2,500mg (50세 이상 2,000mg)','라벨의 칼슘으로서 함량을 보세요'], ul:2500, unit:'mg'},
+  {id:'folate', name:'엽산', info:['세포와 혈액생성에 필요','태아 신경관의 정상 발달에 필요','혈액의 호모시스테인 수준을 정상으로 유지하는데 필요'], kv:['1일 상한섭취량 1,000㎍ (보충제 기준)','라벨의 ㎍ DFE 기준으로 비교하세요'], ul:1000, unit:'㎍'},
+  {id:'vitb', name:'비타민B군', info:['비타민B1: 탄수화물과 에너지 대사에 필요','비타민B2: 체내 에너지 생성에 필요','비타민B6: 단백질 및 아미노산 이용에 필요','비타민B12: 정상적인 엽산 대사에 필요'], kv:['비타민B6 1일 상한섭취량 100mg','제품마다 성분별 함량이 크게 달라요'], ul:100, unit:'mg'},
+  {id:'selenium', name:'셀레늄', info:['유해산소로부터 세포를 보호하는데 필요'], kv:['1일 상한섭취량 400㎍','종합비타민과 함량을 더해 보세요'], ul:400, unit:'㎍'},
+  {id:'glucosamine', name:'글루코사민', info:['관절 및 연골 건강에 도움을 줄 수 있음'], kv:['고시 기준 하루 1.5~2g','갑각류 알레르기가 있으면 원료를 확인하세요']},
 ];
 
 const IMG = 'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/';
@@ -177,6 +183,24 @@ const P = [
   {c:'biotin', brand:"NOW Foods", name:'비오틴 5,000mcg 120캡슐', price:11789, count:120, dose:1, rating:4.8, reviews:73857, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/now-foods-biotin-5-000-mcg-120-veg-capsules/3319', img:'now/now00474/g/68.jpg'},
   {c:'biotin', brand:"California Gold Nutrition", name:'비오틴 10,000mcg 90소프트젤', price:12118, count:90, dose:1, rating:4.7, reviews:17367, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/california-gold-nutrition-biotin-10-000-mcg-90-veggie-softgels/76865', img:'cgn/cgn01170/g/184.jpg'},
   {c:'biotin', brand:"21st Century", name:'비오틴 10,000mcg 120정', price:10826, count:120, dose:1, rating:4.7, reviews:48136, pd:'2026년 11월 14일', url:'https://kr.iherb.com/pr/21st-century-biotin-10-000-mcg-120-tablets/64496', img:'cen/cen27757/g/61.jpg'},
+  {c:'iron', brand:"NOW Foods", name:"철분 18mg 120캡슐", price:11462, count:120, dose:1, rating:4.7, reviews:23248, amt:18, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-iron-18-mg-120-veg-capsules/10481', img:'now/now01443/g/53.jpg'},
+  {c:'iron', brand:"Solgar", name:"젠틀 아이언 25mg 90캡슐", price:13010, count:90, dose:1, rating:4.8, reviews:48217, amt:25, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/solgar-gentle-iron-25-mg-90-vegetable-capsules/69609', img:'sol/sol01249/g/127.jpg'},
+  {c:'iron', brand:"California Gold Nutrition", name:"철분 비스글리시네이트 36mg 90캡슐", price:10827, count:90, dose:1, rating:4.7, reviews:21187, amt:36, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/california-gold-nutrition-ferrochel-iron-bisglycinate-36-mg-90-veggie-capsules/89592', img:'cgn/cgn01347/g/265.jpg'},
+  {c:'calcium', brand:"NOW Foods", name:"구연산 칼슘(마그네슘·비타민D 함유) 250정", price:32144, count:250, dose:2, rating:4.7, reviews:7170, amt:600, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-calcium-citrate-250-tablets/472', img:'now/now01232/g/33.jpg'},
+  {c:'calcium', brand:"KAL", name:"구연산칼슘 1000 180정", price:15933, count:180, dose:3, rating:4.9, reviews:13332, amt:1000, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/kal-calcium-citrate-1000-180-tablets-333-mg-per-tablet/22555', img:'cal/cal14126/g/105.jpg'},
+  {c:'calcium', brand:"21st Century", name:"칼슘 600 400정", price:12050, count:400, dose:1, rating:4.7, reviews:4906, amt:600, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/21st-century-calcium-supplement-600-400-tablets-600-mg-per-tablet/59332', img:'cen/cen27534/g/81.jpg'},
+  {c:'folate', brand:"Doctor's Best", name:"활성 엽산 400㎍ 90캡슐", price:11352, count:90, dose:1, rating:4.9, reviews:10655, amt:400, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-fully-active-folate-400-400-mcg-90-veggie-caps/38067', img:'drb/drb00262/g/80.jpg'},
+  {c:'folate', brand:"Doctor's Best", name:"활성 엽산 800㎍ 60캡슐", price:12467, count:60, dose:1, rating:4.8, reviews:5954, amt:800, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-fully-active-folate-800-800-mcg-60-veggie-caps/72624', img:'drb/drb00458/g/74.jpg'},
+  {c:'folate', brand:"NOW Foods", name:"메틸 엽산 1,000㎍ 90정", price:16819, count:90, dose:1, rating:4.9, reviews:16601, amt:1667, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-methyl-folate-1-000-mcg-90-tablets/70964', img:'now/now00491/g/54.jpg'},
+  {c:'vitb', brand:"Thorne", name:"기본 B 복합체 60캡슐", price:27667, count:60, dose:1, rating:4.8, reviews:24426, amt:10, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/thorne-basic-b-complex-60-capsules/18791', img:'thr/thr10403/g/54.jpg'},
+  {c:'vitb', brand:"California Gold Nutrition", name:"비타민B 복합체 60캡슐", price:14549, count:60, dose:1, rating:4.8, reviews:8027, amt:34, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/california-gold-nutrition-vitamin-b-complex-with-folate-biotin-pantothenic-acid-and-vitamin-b6-60-veggie-capsules/86956', img:'cgn/cgn01296/g/248.jpg'},
+  {c:'vitb', brand:"Solgar", name:"B-복합체 100 100캡슐", price:25493, count:100, dose:1, rating:4.8, reviews:12851, amt:100, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/solgar-b-complex-100-100-vegetable-capsules/19437', img:'sol/sol01150/g/94.jpg'},
+  {c:'selenium', brand:"California Gold Nutrition", name:"셀레늄 200㎍ 180캡슐", price:12516, count:180, dose:1, rating:4.8, reviews:13415, amt:200, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/california-gold-nutrition-selenium-yeast-free-200-mcg-180-veggie-capsules/90416', img:'cgn/cgn01352/g/145.jpg'},
+  {c:'selenium', brand:"NOW Foods", name:"셀레늄 100㎍ 100정", price:6103, count:100, dose:1, rating:4.8, reviews:62860, amt:100, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-selenium-100-mcg-100-tablets/102324', img:'now/now01480/g/46.jpg'},
+  {c:'selenium', brand:"NOW Foods", name:"셀레늄 200㎍ 180캡슐", price:15290, count:180, dose:1, rating:4.8, reviews:24285, amt:200, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-selenium-200-mcg-180-veg-capsules/818', img:'now/now01486/g/84.jpg'},
+  {c:'glucosamine', brand:"NOW Foods", name:"글루코사민 황산염 750mg 240캡슐", price:30606, count:240, dose:2, rating:4.7, reviews:1148, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-glucosamine-sulfate-240-capsules-0-75-g-per-capsule/617', img:'now/now03238/g/64.jpg'},
+  {c:'glucosamine', brand:"Doctor's Best", name:"글루코사민 750mg 180캡슐", price:16978, count:180, dose:2, rating:4.7, reviews:3394, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-glucosamine-180-capsules-750-mg-per-capsule/9', img:'drb/drb00086/g/201.jpg'},
+  {c:'glucosamine', brand:"Doctor's Best", name:"글루코사민·콘드로이틴·MSM 240캡슐", price:38566, count:240, dose:4, rating:4.8, reviews:95619, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-glucosamine-chondroitin-msm-with-optimsm-240-veggie-capsules/23', img:'drb/drb00081/g/121.jpg'},
 ];
 P.forEach(p=>{p.days=Math.floor(p.count/p.dose); p.daily=Math.round(p.price/p.days); p.id=p.url.split('/').pop();});
 
