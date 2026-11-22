@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>건강 길잡이 | 영양제 1일 단가 비교</title>
-<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민, 아연, 루테인, 코엔자임Q10, 밀크씨슬, 콜라겐, 비오틴, 철분, 칼슘, 엽산, 비타민B군, 셀레늄, 글루코사민 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
+<meta name="description" content="비타민D, 마그네슘, 오메가3, 유산균, 비타민C, 종합비타민, 아연, 루테인, 코엔자임Q10, 밀크씨슬, 콜라겐, 비오틴, 철분, 칼슘, 엽산, 비타민B군, 셀레늄, 글루코사민, MSM, 비타민K, 차전자피, 쏘팔메토, 프로폴리스, 비타민E 인기 제품의 하루치 가격과 함량을 한눈에 비교하고, 내 복용 루틴을 체크하세요.">
 <meta property="og:title" content="건강 길잡이 | 영양제 1일 단가 비교">
 <meta property="og:description" content="인기 영양제를 하루치 가격으로 비교하고 복용 루틴을 체크해요.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -143,6 +143,12 @@ const CATS = [
   {id:'vitb', name:'비타민B군', info:['비타민B1: 탄수화물과 에너지 대사에 필요','비타민B2: 체내 에너지 생성에 필요','비타민B6: 단백질 및 아미노산 이용에 필요','비타민B12: 정상적인 엽산 대사에 필요'], kv:['비타민B6 1일 상한섭취량 100mg','제품마다 성분별 함량이 크게 달라요'], ul:100, unit:'mg'},
   {id:'selenium', name:'셀레늄', info:['유해산소로부터 세포를 보호하는데 필요'], kv:['1일 상한섭취량 400㎍','종합비타민과 함량을 더해 보세요'], ul:400, unit:'㎍'},
   {id:'glucosamine', name:'글루코사민', info:['관절 및 연골 건강에 도움을 줄 수 있음'], kv:['고시 기준 하루 1.5~2g','갑각류 알레르기가 있으면 원료를 확인하세요']},
+  {id:'msm', name:'MSM(식이유황)', info:['관절 및 연골 건강에 도움을 줄 수 있음'], kv:['고시 기준 하루 1.5~2g','처음 먹을 때 속이 불편하면 나눠 드세요']},
+  {id:'vitk', name:'비타민K', info:['정상적인 혈액응고에 필요','뼈의 구성에 필요'], kv:['혈액응고 관련 약(와파린 등)을 먹고 있다면 먼저 의사·약사와 상담하세요','K1·K2(MK-4, MK-7) 종류를 확인하세요']},
+  {id:'fiber', name:'차전자피', info:['배변활동 원활에 도움을 줄 수 있음','혈중 콜레스테롤 개선에 도움을 줄 수 있음'], kv:['물을 충분히 함께 마시세요','다른 약·영양제와 2시간쯤 띄워요']},
+  {id:'sawpalmetto', name:'쏘팔메토', info:['전립선 건강의 유지에 도움을 줄 수 있음'], kv:['고시 기준 쏘팔메토 열매 추출물 하루 320mg','열매 분말이 아니라 추출물 함량을 보세요']},
+  {id:'propolis', name:'프로폴리스', info:['항산화에 도움을 줄 수 있음','구강에서의 항균작용에 도움을 줄 수 있음'], kv:['벌·꿀 관련 알레르기가 있으면 주의하세요','추출물 함량과 농축 비율을 같이 보세요']},
+  {id:'vite', name:'비타민E', info:['유해산소로부터 세포를 보호하는데 필요'], kv:['1일 상한섭취량 540mg α-TE','종합비타민과 함량을 더해 보세요'], ul:540, unit:'mg'},
 ];
 
 const IMG = 'https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/';
@@ -201,6 +207,24 @@ const P = [
   {c:'glucosamine', brand:"NOW Foods", name:"글루코사민 황산염 750mg 240캡슐", price:30606, count:240, dose:2, rating:4.7, reviews:1148, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/now-foods-glucosamine-sulfate-240-capsules-0-75-g-per-capsule/617', img:'now/now03238/g/64.jpg'},
   {c:'glucosamine', brand:"Doctor's Best", name:"글루코사민 750mg 180캡슐", price:16978, count:180, dose:2, rating:4.7, reviews:3394, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-glucosamine-180-capsules-750-mg-per-capsule/9', img:'drb/drb00086/g/201.jpg'},
   {c:'glucosamine', brand:"Doctor's Best", name:"글루코사민·콘드로이틴·MSM 240캡슐", price:38566, count:240, dose:4, rating:4.8, reviews:95619, pd:'2026년 11월 16일', url:'https://kr.iherb.com/pr/doctor-s-best-glucosamine-chondroitin-msm-with-optimsm-240-veggie-capsules/23', img:'drb/drb00081/g/121.jpg'},
+  {c:'msm', brand:"Doctor's Best", name:"MSM 1,500mg 120정", price:13580, count:120, dose:2, rating:4.6, reviews:32230, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/doctor-s-best-msm-with-optimsm-1-500-mg-120-tablets/3', img:'drb/drb00097/g/202.jpg'},
+  {c:'msm', brand:"Doctor's Best", name:"MSM 1,000mg 360캡슐", price:32009, count:360, dose:3, rating:4.7, reviews:9773, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/doctor-s-best-msm-with-optimsm-360-capsules-1-000-mg-per-capsule/54231', img:'drb/drb00317/g/111.jpg'},
+  {c:'msm', brand:"21st Century", name:"MSM 1,000mg 90정", price:12182, count:90, dose:3, rating:4.7, reviews:583, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/21st-century-msm-1-000-mg-90-tablets/43782', img:'cen/cen21720/g/72.jpg'},
+  {c:'vitk', brand:"California Gold Nutrition", name:"비타민K2(MK-7) 50㎍ 120소프트젤", price:13675, count:120, dose:1, rating:4.8, reviews:9116, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-vitamin-k2-as-menaquinone-7-50-mcg-120-veggie-softgels/96264', img:'lkn/lkn01550/g/152.jpg'},
+  {c:'vitk', brand:"NOW Foods", name:"비타민K2(MK-7) 100㎍ 120캡슐", price:30978, count:120, dose:1, rating:4.8, reviews:31651, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/now-foods-mk-7-vitamin-k-2-100-mcg-120-veg-capsules/78992', img:'now/now00993/g/86.jpg'},
+  {c:'vitk', brand:"California Gold Nutrition", name:"비타민K 복합체 60캡슐", price:12218, count:60, dose:1, rating:4.8, reviews:2187, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-vitamin-k-complex-60-veggie-capsules/140026', img:'cgn/cgn02417/g/46.jpg'},
+  {c:'fiber', brand:"NOW Foods", name:"차전자피 700mg 180캡슐", price:18583, count:180, dose:4, rating:4.8, reviews:19195, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/now-foods-psyllium-husk-caps-180-veg-capsules/758', img:'now/now05973/g/100.jpg'},
+  {c:'fiber', brand:"NOW Foods", name:"차전자피 500mg 500캡슐", price:30987, count:500, dose:6, rating:4.8, reviews:5572, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/now-foods-psyllium-husk-caps-500-mg-500-veg-capsules/752', img:'now/now05972/g/66.jpg'},
+  {c:'fiber', brand:"Swanson Vitamins", name:"차전자피 610mg 300캡슐", price:28878, count:300, dose:3, rating:4.8, reviews:5026, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/swanson-vitamins-psyllium-husks-610-mg-300-vegan-capsules/111030', img:'swv/swv11077/g/64.jpg'},
+  {c:'sawpalmetto', brand:"NOW Foods", name:"쏘팔메토 추출물 320mg 90소프트젤", price:30978, count:90, dose:1, rating:4.7, reviews:11237, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/now-foods-saw-palmetto-extract-90-veggie-softgels/6106', img:'now/now04756/g/55.jpg'},
+  {c:'sawpalmetto', brand:"Doctor's Best", name:"쏘팔메토 추출물 320mg 60소프트젤", price:26129, count:60, dose:1, rating:4.6, reviews:2380, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/doctor-s-best-saw-palmetto-standardized-extract-320-mg-60-softgels/24', img:'drb/drb00082/g/95.jpg'},
+  {c:'sawpalmetto', brand:"Doctor's Best", name:"쏘팔메토 추출물 320mg 180소프트젤", price:70104, count:180, dose:1, rating:4.6, reviews:2381, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/doctor-s-best-saw-palmetto-standardized-extract-320-mg-180-softgels/40434', img:'drb/drb00272/g/97.jpg'},
+  {c:'propolis', brand:"California Gold Nutrition", name:"프로폴리스 2X 추출물 500mg 90캡슐", price:13579, count:90, dose:1, rating:4.6, reviews:32158, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-bee-propolis-2x-concentrated-extract-500-mg-90-veggie-caps/61839', img:'cgn/cgn00945/g/141.jpg'},
+  {c:'propolis', brand:"California Gold Nutrition", name:"프로폴리스 2X 추출물 500mg 240캡슐", price:31275, count:240, dose:1, rating:4.6, reviews:32158, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-bee-propolis-2x-concentrated-extract-500-mg-240-veggie-capsules/61840', img:'cgn/cgn00946/g/122.jpg'},
+  {c:'propolis', brand:"California Gold Nutrition", name:"프로폴리스 추출물 200mg 240캡슐", price:21642, count:240, dose:1, rating:4.7, reviews:17509, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-bee-propolis-1-000-mg-240-capsules/97400', img:'lkn/lkn01694/g/208.jpg'},
+  {c:'vite', brand:"California Gold Nutrition", name:"해바라기 비타민E 400IU 90소프트젤", price:26702, count:90, dose:1, rating:4.7, reviews:4051, amt:268, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/california-gold-nutrition-sunflower-vitamin-e-with-mixed-tocopherols-400-iu-90-veggie-softgels/76864', img:'cgn/cgn01169/g/198.jpg'},
+  {c:'vite', brand:"21st Century", name:"비타민E 180mg 110소프트젤", price:9967, count:110, dose:2, rating:4.7, reviews:29547, amt:360, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/21st-century-vitamin-e-180-mg-400-iu-110-softgels/43747', img:'cen/cen21245/g/38.jpg'},
+  {c:'vite', brand:"Swanson Vitamins", name:"비타민E-400 180mg 60소프트젤", price:14432, count:60, dose:1, rating:4.8, reviews:7918, amt:180, pd:'2026년 11월 22일', url:'https://kr.iherb.com/pr/swanson-vitamins-vitamin-e-400-180-2-mg-400-iu-60-softgels/117798', img:'swv/swv11438/g/24.jpg'},
 ];
 P.forEach(p=>{p.days=Math.floor(p.count/p.dose); p.daily=Math.round(p.price/p.days); p.id=p.url.split('/').pop();});
 
